@@ -1,0 +1,7 @@
+{
+    "imports": {
+        "utils": "./utils.ts",
+        "command": "https://deno.land/x/cliffy@v0.25.4/command/mod.ts",
+        "path": "https://deno.land/std@0.167.0/path/mod.ts"
+    }
+}
