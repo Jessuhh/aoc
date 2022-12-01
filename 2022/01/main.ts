@@ -1,4 +1,4 @@
-import { getInput } from "../../helpers";
+import { getInput } from "../../helpers.ts";
 
 // const input = getInput("2022/01/test.txt");
 const input = getInput("2022/01/input.txt");
