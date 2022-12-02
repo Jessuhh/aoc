@@ -1,3 +1,3 @@
-export function getInput(file: string): string[] {
-    return Deno.readTextFileSync(file).split("\n\n");
+export function getInput(file: string, seperator = "\n"): string[] {
+    return Deno.readTextFileSync(file).split(seperator);
 }

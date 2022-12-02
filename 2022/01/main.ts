@@ -1,7 +1,7 @@
 import { getInput } from "utils";
 
-// const input = getInput("2022/01/test.txt");
-const input = getInput("2022/01/input.txt");
+// const input = getInput("2022/01/test.txt", "\n\n");
+const input = getInput("2022/01/input.txt", "\n\n");
 
 const getMostCalories = () =>
     input.reduce((mostCaloriesPreviously: number, elf: string) => {
