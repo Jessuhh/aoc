@@ -50,4 +50,50 @@ const getFinalScore = () => {
         .reduce((a, b) => a + b, 0);
 };
 
-console.log(getFinalScore());
+// console.log(getFinalScore());
+
+const RESULT = {
+    LOSE: "X",
+    DRAW: "Y",
+    WIN: "Z",
+};
+
+// Rock = 1
+// Paper = 2
+// Scissors = 3
+
+// Part 2
+const getFinalScorePart2 = () => {
+    return input
+        .map((round) => {
+            switch (round) {
+                // Rock
+                case `${OPPONENT.ROCK} ${RESULT.LOSE}`:
+                    return 0 + 3;
+                case `${OPPONENT.ROCK} ${RESULT.DRAW}`:
+                    return 3 + 1;
+                case `${OPPONENT.ROCK} ${RESULT.WIN}`:
+                    return 6 + 2;
+                // Paper
+                case `${OPPONENT.PAPER} ${RESULT.LOSE}`:
+                    return 0 + 1;
+                case `${OPPONENT.PAPER} ${RESULT.DRAW}`:
+                    return 3 + 2;
+                case `${OPPONENT.PAPER} ${RESULT.WIN}`:
+                    return 6 + 3;
+                // Scissors
+                case `${OPPONENT.SCISSORS} ${RESULT.LOSE}`:
+                    return 0 + 2;
+                case `${OPPONENT.SCISSORS} ${RESULT.DRAW}`:
+                    return 3 + 3;
+                case `${OPPONENT.SCISSORS} ${RESULT.WIN}`:
+                    return 6 + 1;
+            }
+
+            // Should never get here
+            return 0;
+        })
+        .reduce((a, b) => a + b, 0);
+};
+
+console.log(getFinalScorePart2());
