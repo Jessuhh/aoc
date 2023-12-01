@@ -10,8 +10,10 @@ console.log(`Running day ${day} year ${year}`);
 
 const command = new Deno.Command(Deno.execPath(), {
     args: [`run`, "--allow-read", join(year, day.padStart(2, "0"), "main.ts")],
+    stdout: "piped",
+    stderr: "piped",
 });
-const { stdout, stderr } = command.outputSync();
 
-console.log(new TextDecoder().decode(stdout));
-console.log(new TextDecoder().decode(stderr));
+const child = command.spawn();
+await child.stdout.pipeTo(Deno.stdout.writable);
+await child.stderr.pipeTo(Deno.stderr.writable);

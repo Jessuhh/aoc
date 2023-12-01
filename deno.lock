@@ -1,5 +1,8 @@
 {
-  "version": "2",
+  "version": "3",
+  "redirects": {
+    "https://deno.land/x/sleep/mod.ts": "https://deno.land/x/sleep@v1.2.1/mod.ts"
+  },
   "remote": {
     "https://deno.land/std@0.167.0/_util/asserts.ts": "d0844e9b62510f89ce1f9878b046f6a57bf88f208a10304aab50efcb48365272",
     "https://deno.land/std@0.167.0/_util/os.ts": "8a33345f74990e627b9dfe2de9b040004b08ea5146c7c9e8fe9a29070d193934",
@@ -11,6 +14,8 @@
     "https://deno.land/std@0.167.0/path/mod.ts": "cf7cec7ac11b7048bb66af8ae03513e66595c279c65cfa12bfc07d9599608b78",
     "https://deno.land/std@0.167.0/path/posix.ts": "b859684bc4d80edfd4cad0a82371b50c716330bed51143d6dcdbe59e6278b30c",
     "https://deno.land/std@0.167.0/path/separator.ts": "fe1816cb765a8068afb3e8f13ad272351c85cbc739af56dacfc7d93d710fe0f9",
-    "https://deno.land/std@0.167.0/path/win32.ts": "7cebd2bda6657371adc00061a1d23fdd87bcdf64b4843bb148b0b24c11b40f69"
+    "https://deno.land/std@0.167.0/path/win32.ts": "7cebd2bda6657371adc00061a1d23fdd87bcdf64b4843bb148b0b24c11b40f69",
+    "https://deno.land/x/sleep@v1.2.1/mod.ts": "f2d3c9e1ef1fb2852f580f6960384bed36bc18a2da357c35f11a089fcca44273",
+    "https://deno.land/x/sleep@v1.2.1/sleep.ts": "2426efe5d3ce5de0b8af08bd36a8700deb5dc60e752f5f8f05d5e815a7e8cb0e"
   }
 }
