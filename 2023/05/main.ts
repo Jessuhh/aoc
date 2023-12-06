@@ -60,13 +60,13 @@ function partTwo() {
         range: number;
     };
 
-    const seeds: Range[] = [];
+    const seedRanges: Range[] = [];
     for (let i = 0; i < seedsRange.length; i += 2) {
         const from = seedsRange[i];
         const range = seedsRange[i + 1];
-        seeds.push({ from, range });
+        seedRanges.push({ from, range });
     }
-    // console.log(seeds);
+    console.log(seedRanges);
     input.splice(0, 1);
 
     type Transformer = {
@@ -85,94 +85,41 @@ function partTwo() {
             const values = line.split(" ").map((value) => parseInt(value));
             return { destination: values[0], source: values[1], range: values[2] };
         });
-    });
+    }).reverse();
 
-    // const map = maps[0];
-    maps.forEach((map) => {
-        // console.log("New map ----------------------");
-        // for (let i = 0; i < seeds.length; i++) {
-        //     const seed = seeds[i];
-        seeds.forEach((seed) => {
-            let transformed = false;
-            // console.log(`Seed: ${seed.from} -> ${seed.from + seed.range - 1} (${seed.range})`);
-            map.forEach((transformer) => {
-                if (transformed) return;
-                // console.log(
-                // `Transformer: ${transformer.source} -> ${transformer.source + transformer.range - 1} = ${
-                // transformer.destination
-                // } -> ${transformer.destination + transformer.range - 1} (${transformer.range})`
-                // );
-                const isStartInside =
-                    seed.from >= transformer.source && seed.from < transformer.source + transformer.range;
-                const end = seed.from + seed.range - 1;
-                const isEndInside = end >= transformer.source && end < transformer.source + transformer.range;
+    let lowest;
+    let location = 1;
+    while (!lowest) {
+        // console.log("");
+        // console.log(`Trying location: ${location}`);
+        let seed = location;
 
-                // Four cases:
-                // Complete seed is inside range
-                if (isStartInside && isEndInside) {
-                    // console.log("Complete seed is inside range");
-                    seed.from += transformer.destination - transformer.source;
-                    // console.log(`Seed updated: ${seed.from} -> ${seed.from + seed.range - 1} (${seed.range})`);
-                    transformed = true;
-                    return;
+        maps.forEach((map) => {
+            // console.log(`------- New Map ---------`)
+            // console.log(`Seed: ${seed}`)
+            let done = false;
+            map.reverse().forEach((transformer) => {
+                if (done) return;
+                // console.log(`Transformer: ${transformer.source} -> ${transformer.source + transformer.range - 1} = ${transformer.destination} -> ${transformer.destination + transformer.range - 1} (${transformer.range} | Δ${transformer.destination - transformer.source})`)
+                if (transformer.destination <= seed && seed < transformer.destination + transformer.range) {
+                    const difference = transformer.destination - transformer.source;
+                    // console.log(`Seed transformed from: ${seed} to: ${seed + difference} `);
+                    seed -= difference;
+                    done = true;
                 }
-                // End of seed is inside range
-                if (!isStartInside && isEndInside) {
-                    // console.log("end of seed is inside range");
-                    seeds.push({ from: seed.from, range: transformer.source - seed.from });
-                    seed.range = seed.from + seed.range - 1 - transformer.source;
-                    seed.from = transformer.destination;
-                    transformed = true;
-                    return;
-                }
-                // Start of seed is inside range
-                if (isStartInside && !isEndInside) {
-                    // console.log("Start of seed is inside range");
-                    const from = transformer.source + transformer.range;
-                    const to = seed.from + seed.range;
-                    // console.log(`From: ${from} to: ${to}`)
-                    const newSeed: Range = {
-                        from: from,
-                        range: to - from,
-                    };
-                    // console.log(
-                    // `Seed added: ${newSeed.from} -> ${newSeed.from + newSeed.range - 1} (${newSeed.range})`
-                    // );
-                    seeds.push(newSeed);
-                    seed.from = transformer.destination + seed.from - transformer.source;
-                    seed.range = transformer.destination + transformer.range - seed.from;
-                    // console.log(`Seed updated: ${seed.from} -> ${seed.from + seed.range - 1} (${seed.range})`);
-                    transformed = true;
-                    return;
-                }
-                // Middle of seed is inside range
-                if (
-                    !isStartInside &&
-                    !isEndInside &&
-                    seed.from < transformer.source &&
-                    seed.from + seed.range - 1 > transformer.source + transformer.range - 1
-                ) {
-                    // console.log("Middle of seed is inside range");
-                    // Add the end part as a new seed range
-                    seeds.push({ from: seed.from, range: transformer.source - seed.from });
-                    // Add the beginning part as a new seed range
-                    seeds.push({
-                        from: transformer.source + transformer.range,
-                        range: seed.from + seed.range - 1 - transformer.source + transformer.range - 1,
-                    });
-
-                    seed.from = transformer.destination;
-                    seed.range = transformer.range;
-                    transformed = true;
-                    return;
-                }
-                // console.log("Nothing happens to this seed in this transformer");
             });
-            // console.log(`Becomes: ${seeds[i]}`);
         });
-    });
 
-    return Math.min(...seeds.map((seed) => seed.from));
+        seedRanges.forEach((seedRange) => {
+            // console.log(`Seedrange: ${seedRange.from} -> ${seedRange.from + seedRange.range - 1} (${seedRange.range})`)
+            if (seedRange.from < seed && seed < seedRange.from + seedRange.range) {
+                lowest = location;
+            }
+        });
+        // console.log(`Final seed: ${seed}`)
+        location++;
+    }
+    return lowest;
 }
 
 // 3100559 is too low
